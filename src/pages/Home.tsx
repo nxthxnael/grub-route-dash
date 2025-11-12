@@ -1,8 +1,10 @@
-import { Search, MapPin, SlidersHorizontal } from "lucide-react";
+import { Search, MapPin, SlidersHorizontal, Map as MapIcon, List } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RestaurantCard } from "@/components/RestaurantCard";
+import { MapView } from "@/components/MapView";
 import heroImage from "@/assets/hero-food.jpg";
 import beefStewImage from "@/assets/beef-stew.jpg";
 import chickenImage from "@/assets/chicken.jpg";
@@ -17,6 +19,7 @@ const restaurants = [
     deliveryTime: "25-35 min",
     deliveryFee: 50,
     cuisine: ["African", "Traditional"],
+    location: [37.151, -0.722] as [number, number],
   },
   {
     id: "2",
@@ -26,6 +29,7 @@ const restaurants = [
     deliveryTime: "30-40 min",
     deliveryFee: 60,
     cuisine: ["Grill", "BBQ"],
+    location: [37.148, -0.725] as [number, number],
   },
   {
     id: "3",
@@ -35,11 +39,13 @@ const restaurants = [
     deliveryTime: "20-30 min",
     deliveryFee: 40,
     cuisine: ["Healthy", "Salads"],
+    location: [37.154, -0.719] as [number, number],
   },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -76,6 +82,14 @@ const Home = () => {
             <Button size="icon" variant="outline" aria-label="Filter options">
               <SlidersHorizontal className="h-5 w-5" />
             </Button>
+            <Button 
+              size="icon" 
+              variant="outline"
+              onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')}
+              aria-label={`Switch to ${viewMode === 'list' ? 'map' : 'list'} view`}
+            >
+              {viewMode === 'list' ? <MapIcon className="h-5 w-5" /> : <List className="h-5 w-5" />}
+            </Button>
           </div>
 
           <Button
@@ -89,22 +103,31 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Restaurants List */}
-      <section className="px-4 mt-6">
-        <h2 className="text-xl font-bold text-foreground mb-4">
-          Popular Restaurants
-        </h2>
-        
-        <div className="space-y-4">
-          {restaurants.map((restaurant) => (
-            <RestaurantCard
-              key={restaurant.id}
-              {...restaurant}
-              onClick={() => navigate(`/restaurant/${restaurant.id}`)}
-            />
-          ))}
-        </div>
-      </section>
+      {/* Map or List View */}
+      {viewMode === 'map' ? (
+        <section className="h-[calc(100vh-280px)] mt-6">
+          <MapView 
+            restaurants={restaurants}
+            onRestaurantClick={(id) => navigate(`/restaurant/${id}`)}
+          />
+        </section>
+      ) : (
+        <section className="px-4 mt-6">
+          <h2 className="text-xl font-bold text-foreground mb-4">
+            Popular Restaurants
+          </h2>
+          
+          <div className="space-y-4">
+            {restaurants.map((restaurant) => (
+              <RestaurantCard
+                key={restaurant.id}
+                {...restaurant}
+                onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
