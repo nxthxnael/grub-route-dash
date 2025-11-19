@@ -1,4 +1,4 @@
-import { Search, MapPin, SlidersHorizontal, Map as MapIcon, List } from "lucide-react";
+import { Search, MapPin, SlidersHorizontal, Map as MapIcon, List, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -57,6 +57,18 @@ const Home = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        
+        <div className="absolute top-0 right-0 p-4">
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => navigate("/auth")}
+            aria-label="Sign in"
+            className="bg-background/80 backdrop-blur-sm"
+          >
+            <User className="h-5 w-5" />
+          </Button>
+        </div>
         
         <div className="absolute bottom-0 left-0 right-0 p-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">
