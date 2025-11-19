@@ -3,6 +3,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const menuItems = [
   {
@@ -30,6 +33,18 @@ const menuItems = [
 ];
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast.error("Failed to log out");
+      return;
+    }
+    toast.success("Logged out successfully");
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
@@ -111,6 +126,7 @@ const Profile = () => {
           <Button
             variant="outline"
             className="w-full text-error border-error/20 hover:bg-error/5 hover:border-error/30"
+            onClick={handleLogout}
           >
             <LogOut className="h-5 w-5 mr-2" />
             Log Out
