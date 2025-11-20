@@ -4,15 +4,77 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Cart = () => {
   const navigate = useNavigate();
+  const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleCheckout = () => {
-    toast.success("Order placed successfully!", {
-      description: "Your food will arrive in 25-35 minutes",
-    });
-    navigate("/tracking");
+    setShowPaymentDialog(true);
+  };
+
+  const handleMpesaPayment = async () => {
+    if (!phoneNumber) {
+      toast.error("Please enter your phone number");
+      return;
+    }
+
+    // Validate phone number format
+    const cleanPhone = phoneNumber.replace(/\s/g, "");
+    if (!/^(?:254|\+254|0)?[17]\d{8}$/.test(cleanPhone)) {
+      toast.error("Please enter a valid Kenyan phone number");
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("mpesa-payment", {
+        body: {
+          phoneNumber: phoneNumber,
+          amount: 1300, // Total amount from cart
+          accountReference: "ORDER-" + Date.now(),
+          transactionDesc: "Food Order Payment",
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        toast.success("Payment request sent!", {
+          description: "Please check your phone and enter your M-Pesa PIN",
+        });
+        setShowPaymentDialog(false);
+        
+        // Navigate to tracking after a brief delay
+        setTimeout(() => {
+          navigate("/tracking");
+        }, 2000);
+      } else {
+        throw new Error(data.error || "Payment initiation failed");
+      }
+    } catch (error: any) {
+      console.error("Payment error:", error);
+      toast.error("Payment failed", {
+        description: error.message || "Please try again",
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -131,6 +193,54 @@ const Cart = () => {
           Place Order • KES 1,300
         </Button>
       </div>
+
+      {/* M-Pesa Payment Dialog */}
+      <Dialog open={showPaymentDialog} onOpenChange={setShowPaymentDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Complete Payment</DialogTitle>
+            <DialogDescription>
+              Enter your M-Pesa phone number to receive a payment prompt
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                placeholder="0712345678 or 254712345678"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                disabled={isProcessing}
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter your Safaricom number to receive the STK push
+              </p>
+            </div>
+
+            <div className="bg-muted p-3 rounded-lg space-y-1">
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Amount to pay:</span>
+                <span className="font-semibold">KES 1,300</span>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowPaymentDialog(false)}
+              disabled={isProcessing}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleMpesaPayment} disabled={isProcessing}>
+              {isProcessing ? "Processing..." : "Pay with M-Pesa"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
