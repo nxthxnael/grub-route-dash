@@ -33,10 +33,12 @@ export const RestaurantCard = ({
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
-      
+
       <div className="p-4 space-y-2">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-bold text-lg text-foreground leading-tight">{name}</h3>
+          <h3 className="font-bold text-lg text-foreground leading-tight">
+            {name}
+          </h3>
           <div className="flex items-center gap-1 text-sm font-semibold shrink-0">
             <Star className="h-4 w-4 fill-primary text-primary" />
             <span className="text-foreground">{rating}</span>
@@ -57,7 +59,7 @@ export const RestaurantCard = ({
             <span>{deliveryTime}</span>
           </div>
           <div className="flex items-center gap-1">
-            <DollarSign className="h-4 w-4" />
+            {/* <DollarSign className="h-4 w-4" /> */}
             <span>KES {deliveryFee}</span>
           </div>
         </div>

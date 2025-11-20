@@ -1,4 +1,14 @@
-import { User, MapPin, CreditCard, Bell, HelpCircle, LogOut, ChevronRight, Heart, Settings } from "lucide-react";
+import {
+  User,
+  MapPin,
+  CreditCard,
+  Bell,
+  HelpCircle,
+  LogOut,
+  ChevronRight,
+  Heart,
+  Settings,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -12,8 +22,16 @@ const menuItems = [
     section: "Account",
     items: [
       { icon: User, label: "Edit Profile", description: "Name, email, phone" },
-      { icon: MapPin, label: "Addresses", description: "Manage delivery locations" },
-      { icon: CreditCard, label: "Payment Methods", description: "Cards and wallets" },
+      {
+        icon: MapPin,
+        label: "Addresses",
+        description: "Manage delivery locations",
+      },
+      {
+        icon: CreditCard,
+        label: "Payment Methods",
+        description: "Cards and wallets",
+      },
     ],
   },
   {
@@ -27,7 +45,11 @@ const menuItems = [
   {
     section: "Support",
     items: [
-      { icon: HelpCircle, label: "Help Center", description: "FAQs and support" },
+      {
+        icon: HelpCircle,
+        label: "Help Center",
+        description: "FAQs and support",
+      },
     ],
   },
 ];
@@ -59,10 +81,10 @@ const Profile = () => {
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-foreground">Nathanael</h1>
               <p className="text-sm text-muted-foreground mt-1">
-                +254 700 000 000
+                +254 718 796 084
               </p>
               <p className="text-xs text-muted-foreground">
-                nathanael@example.com
+                nathanael.mutua.m@gmail.com
               </p>
             </div>
           </div>
@@ -104,7 +126,9 @@ const Profile = () => {
                         <Icon className="h-5 w-5 text-primary" />
                       </div>
                       <div className="flex-1 text-left min-w-0">
-                        <p className="font-semibold text-foreground">{item.label}</p>
+                        <p className="font-semibold text-foreground">
+                          {item.label}
+                        </p>
                         <p className="text-xs text-muted-foreground mt-0.5">
                           {item.description}
                         </p>
