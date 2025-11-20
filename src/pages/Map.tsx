@@ -37,6 +37,16 @@ const restaurants = [
     cuisine: ["Healthy", "Salads"],
     location: [37.154, -0.719] as [number, number],
   },
+  {
+    id: "4",
+    name: "Samido's Bistro",
+    image: beefStewImage,
+    rating: 4.0,
+    deliveryTime: "20-30 min",
+    deliveryFee: 40,
+    cuisine: ["Healthy", "Salads"],
+    location: [37.154, -0.719] as [number, number],
+  },
 ];
 
 const Map = () => {

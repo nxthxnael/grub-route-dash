@@ -5,10 +5,30 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const orderSteps = [
-  { status: "confirmed", label: "Order Confirmed", time: "2:30 PM", completed: true },
-  { status: "preparing", label: "Preparing Food", time: "2:35 PM", completed: true },
-  { status: "ready", label: "Ready for Pickup", time: "2:45 PM", completed: true },
-  { status: "enroute", label: "On the Way", time: "Est. 3:00 PM", completed: false },
+  {
+    status: "confirmed",
+    label: "Order Confirmed",
+    time: "2:30 PM",
+    completed: true,
+  },
+  {
+    status: "preparing",
+    label: "Preparing Food",
+    time: "2:35 PM",
+    completed: true,
+  },
+  {
+    status: "ready",
+    label: "Ready for Pickup",
+    time: "2:45 PM",
+    completed: true,
+  },
+  {
+    status: "enroute",
+    label: "On the Way",
+    time: "Est. 3:00 PM",
+    completed: false,
+  },
   { status: "delivered", label: "Delivered", time: "", completed: false },
 ];
 
@@ -39,7 +59,7 @@ const Tracking = () => {
       <section className="px-4 py-6 space-y-6">
         <Card className="p-6 border-border">
           <h3 className="font-semibold text-foreground mb-6">Order Status</h3>
-          
+
           <div className="space-y-6">
             {orderSteps.map((step, index) => (
               <div key={step.status} className="flex gap-4">
@@ -57,11 +77,13 @@ const Tracking = () => {
                     />
                   )}
                 </div>
-                
+
                 <div className="flex-1 pb-4">
                   <p
                     className={`font-semibold ${
-                      step.completed ? "text-foreground" : "text-muted-foreground"
+                      step.completed
+                        ? "text-foreground"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {step.label}
@@ -85,14 +107,16 @@ const Tracking = () => {
             </div>
             <div className="flex-1">
               <p className="font-semibold text-foreground">John Mwangi</p>
-              <p className="text-sm text-muted-foreground">Your delivery rider</p>
+              <p className="text-sm text-muted-foreground">
+                Your delivery rider
+              </p>
             </div>
             <Badge variant="secondary">
               <span className="text-success">● </span>
               Active
             </Badge>
           </div>
-          
+
           <div className="mt-4 flex gap-2">
             <Button variant="outline" className="flex-1">
               Call Rider
@@ -106,7 +130,7 @@ const Tracking = () => {
         {/* Order Details */}
         <Card className="p-4 space-y-3 border-border">
           <h3 className="font-semibold text-foreground">Order Details</h3>
-          
+
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Beef Stew</span>

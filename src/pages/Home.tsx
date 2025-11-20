@@ -1,4 +1,11 @@
-import { Search, MapPin, SlidersHorizontal, Map as MapIcon, List, User } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  SlidersHorizontal,
+  Map as MapIcon,
+  List,
+  User,
+} from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -13,7 +20,7 @@ import saladImage from "@/assets/salad.jpg";
 const restaurants = [
   {
     id: "1",
-    name: "Mama's Kitchen",
+    name: "Wanyama's Restaurant",
     image: beefStewImage,
     rating: 4.6,
     deliveryTime: "25-35 min",
@@ -41,11 +48,21 @@ const restaurants = [
     cuisine: ["Healthy", "Salads"],
     location: [37.154, -0.719] as [number, number],
   },
+  {
+    id: "4",
+    name: "Samido's Bistro",
+    image: beefStewImage,
+    rating: 4.0,
+    deliveryTime: "20-30 min",
+    deliveryFee: 40,
+    cuisine: ["Healthy", "Salads"],
+    location: [37.154, -0.719] as [number, number],
+  },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "map">("list");
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -57,7 +74,7 @@ const Home = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        
+
         <div className="absolute top-0 right-0 p-4">
           <Button
             size="icon"
@@ -69,14 +86,12 @@ const Home = () => {
             <User className="h-5 w-5" />
           </Button>
         </div>
-        
+
         <div className="absolute bottom-0 left-0 right-0 p-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Food Delivered Fast
           </h1>
-          <p className="text-muted-foreground">
-            Discover restaurants near you
-          </p>
+          <p className="text-muted-foreground">Discover restaurants near you</p>
         </div>
       </section>
 
@@ -94,13 +109,19 @@ const Home = () => {
             <Button size="icon" variant="outline" aria-label="Filter options">
               <SlidersHorizontal className="h-5 w-5" />
             </Button>
-            <Button 
-              size="icon" 
+            <Button
+              size="icon"
               variant="outline"
-              onClick={() => setViewMode(viewMode === 'list' ? 'map' : 'list')}
-              aria-label={`Switch to ${viewMode === 'list' ? 'map' : 'list'} view`}
+              onClick={() => setViewMode(viewMode === "list" ? "map" : "list")}
+              aria-label={`Switch to ${
+                viewMode === "list" ? "map" : "list"
+              } view`}
             >
-              {viewMode === 'list' ? <MapIcon className="h-5 w-5" /> : <List className="h-5 w-5" />}
+              {viewMode === "list" ? (
+                <MapIcon className="h-5 w-5" />
+              ) : (
+                <List className="h-5 w-5" />
+              )}
             </Button>
           </div>
 
@@ -116,9 +137,9 @@ const Home = () => {
       </section>
 
       {/* Map or List View */}
-      {viewMode === 'map' ? (
+      {viewMode === "map" ? (
         <section className="h-[calc(100vh-280px)] mt-6">
-          <MapView 
+          <MapView
             restaurants={restaurants}
             onRestaurantClick={(id) => navigate(`/restaurant/${id}`)}
           />
@@ -128,7 +149,7 @@ const Home = () => {
           <h2 className="text-xl font-bold text-foreground mb-4">
             Popular Restaurants
           </h2>
-          
+
           <div className="space-y-4">
             {restaurants.map((restaurant) => (
               <RestaurantCard

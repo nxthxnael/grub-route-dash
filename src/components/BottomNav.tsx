@@ -1,6 +1,6 @@
 import { Home, MapPin, ShoppingBag, User } from "lucide-react";
 import { NavLink } from "./NavLink";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/" },
