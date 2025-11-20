@@ -11,6 +11,7 @@ import Tracking from "./pages/Tracking";
 import Map from "./pages/Map";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/map" element={<><Map /><BottomNav /></>} />
           <Route path="/orders" element={<><Orders /><BottomNav /></>} />
           <Route path="/profile" element={<><Profile /><BottomNav /></>} />
+          <Route path="/profile/edit" element={<EditProfile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

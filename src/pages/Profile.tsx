@@ -119,9 +119,18 @@ const Profile = () => {
             <Card className="overflow-hidden">
               {section.items.map((item, itemIdx) => {
                 const Icon = item.icon;
+                 const handleClick = () => {
+                  if (item.label === "Edit Profile") {
+                    navigate("/profile/edit");
+                  }
+                };
+
                 return (
                   <div key={itemIdx}>
-                    <button className="w-full flex items-center gap-4 p-4 hover:bg-accent/5 active:bg-accent/10 transition-colors">
+                    <button 
+                      className="w-full flex items-center gap-4 p-4 hover:bg-accent/5 active:bg-accent/10 transition-colors"
+                      onClick={handleClick}
+                    >
                       <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                         <Icon className="h-5 w-5 text-primary" />
                       </div>
