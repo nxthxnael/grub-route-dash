@@ -61,7 +61,7 @@ const Restaurant = () => {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          
+
           <Button
             variant="ghost"
             size="icon"
@@ -84,7 +84,7 @@ const Restaurant = () => {
         <div className="px-4 py-6 space-y-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground mb-2">
-              Mama's Kitchen
+              Wanyama's Kitchen
             </h1>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">African</Badge>
@@ -114,7 +114,7 @@ const Restaurant = () => {
       {/* Menu */}
       <section className="px-4 py-6">
         <h2 className="text-xl font-bold text-foreground mb-4">Menu</h2>
-        
+
         <div className="space-y-3">
           {menuItems.map((item) => (
             <MenuItemCard

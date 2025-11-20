@@ -9,7 +9,7 @@ import saladImage from "@/assets/salad.jpg";
 const restaurants = [
   {
     id: "1",
-    name: "Mama's Kitchen",
+    name: "Wanyama's Kitchen",
     image: beefStewImage,
     rating: 4.6,
     deliveryTime: "25-35 min",
